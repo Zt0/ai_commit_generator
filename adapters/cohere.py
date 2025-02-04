@@ -12,6 +12,7 @@ class CohereAdapter(LanguageModelAdapter):
         response = self.client.generate(
             model="command-r-plus",
             prompt=prompt,
-            max_tokens=100
+            max_tokens=100,
+            temperature=0.3,
         )
         return response.generations[0].text.strip()
