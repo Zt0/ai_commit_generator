@@ -1,17 +1,13 @@
 import os
 import re
-from typing import Dict, Optional
+from typing import Optional
 
-import git
 from commit_message_generator import CommitMessageGenerator
 from language_model_factory import LanguageModelFactory
 from dotenv import load_dotenv
 import subprocess
 
 load_dotenv()
-
-repo = git.Repo(search_parent_directories=True)
-diff = repo.git.diff('--staged')
 
 def get_diff():
     # Get the diff of the current changes
