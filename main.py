@@ -24,14 +24,9 @@ def generate_commit_message(
     print(commit_message)
     return commit_message
 
-def set_commit_message(message):
-    # Set the commit message
-    subprocess.run(['git', 'commit', '-m', message])
-
 def main():
     diff = get_diff()
     commit_message = generate_commit_message(diff)
-    set_commit_message(commit_message)
 
 if __name__ == "__main__":
     main()

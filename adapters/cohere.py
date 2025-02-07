@@ -4,7 +4,6 @@ import cohere
 class CohereAdapter(LanguageModelAdapter):
     
     def __init__(self, api_key: str):
-        print('api_key', api_key)
         self.client = cohere.Client(api_key)
         self.response = ""
     
