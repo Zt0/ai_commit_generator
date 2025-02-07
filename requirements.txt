@@ -1,2 +1,4 @@
-pre-commit
-pathspec
+pathspec==0.12.1
+cohere==5.13.11
+openai==1.61.0
+python-dotenv==1.0.1
