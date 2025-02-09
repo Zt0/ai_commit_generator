@@ -76,7 +76,7 @@ class CommitMessageGenerator:
 
     def generate_commit_message(self, diff: str, branch_name: str, ticket_number: str, gitignore_content: Optional[str] = None) -> str:
         cleaned_diff = self.clean_diff(diff)
-        changes = self.summarize_diff(diff)
+        changes = self.summarize_diff(cleaned_diff)
         # Create gitignore spec if provided
         gitignore_spec = None
         if gitignore_content:
@@ -103,28 +103,6 @@ class CommitMessageGenerator:
             }
         }
 
-        # context = f"""Generate a comprehensive commit message for a large change set.
-        # Branch: {branch_name}
-        # Ticket: {ticket_number}
-
-        # Change Summary:
-        # - Total Files Changed: {summary['total_files']}
-        # - Additions: {summary['total_additions']}
-        # - Deletions: {summary['total_deletions']}
-        # - File Types: {', '.join(summary['file_types'])}
-
-        # Key Changes:
-        # {self._format_key_changes(summary['key_changes'])}
-
-        # Rules:
-        # 1. Use conventional commits format
-        # 2. Start with the most significant change type
-        # 3. Include scope if changes are focused
-        # 4. Add detailed body explaining major changes
-        # 5. List breaking changes if any
-        # 6. Reference ticket number
-        # 7. Do not include sensitive information
-        # """
         context = f"""Analyze the following code changes and generate a Git commit message that follows the conventional commits specification. The changes include file modifications, additions, and deletions with the following context:
 Branch: {branch_name}
 Ticket: {ticket_number}
