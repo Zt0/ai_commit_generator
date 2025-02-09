@@ -1,7 +1,8 @@
 repos:
--   repo: local
+-   repo: https://github.com/Zt0/ai_commit_generator
+    rev: v1.0.0
     hooks:
-    -   id: generate-commit-message
+    -   id: ai-commit-generator
         name: Generate Commit Message
         entry: python main.py  # Ensure the script runs
         language: system
