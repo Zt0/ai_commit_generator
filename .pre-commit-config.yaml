@@ -1,8 +1,12 @@
-- repo: local
-  hooks:
-    - id: ai-commit-message
-      name: AI Commit Message Generator
-      entry: python main.py  # Path to your script that generates commit messages
-      language: python  # The language for the script
-      files: \.*$  # Apply to All files
-      pass_filenames: false  # No need to pass filenames to the script; it's based on the diff
+repos:
+-   repo: local
+    hooks:
+    -   id: generate-commit-message
+        name: Generate Commit Message
+        entry: python main.py  # Ensure the script runs
+        language: system
+        args: []
+        stages: [prepare-commit-msg]
+        pass_filenames: true
+        always_run: true
+        files: ".*"  # Run on all file types
