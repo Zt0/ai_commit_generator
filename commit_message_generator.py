@@ -12,6 +12,7 @@ class CommitMessageGenerator:
     def _format_key_changes(self, key_changes: Dict[str, List[str]]) -> str:
         """Format key changes for the prompt."""
         result = []
+        print(key_changes)
         for filename, changes in key_changes.items():
             if changes:
                 result.append(f"\n{filename}:")
