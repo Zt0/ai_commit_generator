@@ -29,7 +29,7 @@ def main():
         sys.exit(1)
 
     commit_msg_filepath = sys.argv[1]
-    
+    print(f"Writing commit message to {commit_msg_filepath}")
     try:
         diff = get_diff()
         commit_message = generate_commit_message(diff)
