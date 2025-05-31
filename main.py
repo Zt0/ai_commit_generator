@@ -18,7 +18,11 @@ def get_diff():
 
 def generate_commit_message(diff: str, branch_name: Optional[str] = None, ticket_number: Optional[str] = None) -> str:
     """Generate a commit message using an AI model."""
-    adapter = LanguageModelFactory.create_adapter('cohere', os.getenv('LANGUAGE_MODEL_API_KEY'))
+    api_key = os.getenv('LANGUAGE_MODEL_API_KEY')
+    if not api_key:
+        print("Error: LANGUAGE_MODEL_API_KEY environment variable is not set.", file=sys.stderr)
+        sys.exit(1)
+    adapter = LanguageModelFactory.create_adapter('cohere', api_key)
     generator = CommitMessageGenerator(adapter)
     return generator.generate_commit_message(diff, branch_name, ticket_number)
 

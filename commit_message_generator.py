@@ -1,24 +1,9 @@
 import re
-from typing import Dict, List, Optional, TypedDict, Set
+from typing import Dict, List, Optional
 from adapters.adapter import LanguageModelAdapter
 from pathspec import PathSpec
 from pathspec.patterns.gitwildmatch import GitWildMatchPattern
-
-
-class FileChangeSummary(TypedDict):
-    additions: int
-    deletions: int
-    file_type: str
-    important_changes: List[str]
-
-
-class ChangeSummary(TypedDict):
-    total_files: int
-    total_additions: int
-    total_deletions: int
-    file_types: Set[str]
-    important_files: List[str]
-    key_changes: Dict[str, List[str]]
+from schemas import FileChangeSummary, ChangeSummary
 
 
 class CommitMessageGenerator:
@@ -91,7 +76,7 @@ class CommitMessageGenerator:
             return '\n'.join(lines[:100]) + "\n... (truncated)"
         return diff
 
-    def generate_commit_message(self, diff: str, branch_name: str, ticket_number: str, gitignore_content: Optional[str] = None) -> str:
+    def generate_commit_message(self, diff: str, branch_name: Optional[str], ticket_number: Optional[str], gitignore_content: Optional[str] = None) -> str:
         cleaned_diff = self.clean_diff(diff)
         changes = self.summarize_diff(cleaned_diff)
         # Create gitignore spec if provided
