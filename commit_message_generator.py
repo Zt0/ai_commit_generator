@@ -2,7 +2,9 @@ import re
 from typing import Dict, List, Optional
 from adapters.adapter import LanguageModelAdapter
 from pathspec import PathSpec
-from pathspec.patterns import GitWildMatchPattern
+from pathspec.patterns.gitwildmatch import GitWildMatchPattern
+from schemas import FileChangeSummary, ChangeSummary
+
 
 class CommitMessageGenerator:
     
@@ -11,16 +13,16 @@ class CommitMessageGenerator:
 
     def _format_key_changes(self, key_changes: Dict[str, List[str]]) -> str:
         """Format key changes for the prompt."""
-        result = []
+        result: List[str] = []
         for filename, changes in key_changes.items():
             if changes:
                 result.append(f"\n{filename}:")
                 result.extend(f"  - {change}" for change in changes[:5])  # Limit to 5 changes per file
         return '\n'.join(result)
 
-    def summarize_diff(self, diff: str) -> Dict:
+    def summarize_diff(self, diff: str) -> Dict[str, FileChangeSummary]:
         """Create a summary of changes by file and type."""
-        files_changed = {}
+        files_changed: Dict[str, FileChangeSummary] = {}
         current_file = None
         
         for line in diff.split('\n'):
@@ -74,7 +76,7 @@ class CommitMessageGenerator:
             return '\n'.join(lines[:100]) + "\n... (truncated)"
         return diff
 
-    def generate_commit_message(self, diff: str, branch_name: str, ticket_number: str, gitignore_content: Optional[str] = None) -> str:
+    def generate_commit_message(self, diff: str, branch_name: Optional[str], ticket_number: Optional[str], gitignore_content: Optional[str] = None) -> str:
         cleaned_diff = self.clean_diff(diff)
         changes = self.summarize_diff(cleaned_diff)
         # Create gitignore spec if provided
@@ -90,7 +92,7 @@ class CommitMessageGenerator:
         }
         
         # Prepare summary for AI
-        summary = {
+        summary: ChangeSummary = {
             'total_files': len(changes),
             'total_additions': sum(f['additions'] for f in changes.values()),
             'total_deletions': sum(f['deletions'] for f in changes.values()),
