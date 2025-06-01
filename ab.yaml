@@ -1,6 +1,0 @@
-- id: ai-commit-generator
-  name: AI Commit Message Generator
-  description: "Generates commit messages using AI"
-  entry: python -m main
-  language: python
-  require_serial: true

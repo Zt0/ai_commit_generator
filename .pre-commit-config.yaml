@@ -1,13 +1,10 @@
 repos:
--   repo: https://github.com/Zt0/ai_commit_generator
-    rev: v1.0.0
+-   repo: local
     hooks:
     -   id: ai-commit-generator
-        name: Generate Commit Message
-        entry: python main.py  # Ensure the script runs
+        name: Generate AI Commit Message
+        entry: python ai-commit-generator/main.py
         language: system
-        args: []
         stages: [prepare-commit-msg]
         pass_filenames: true
         always_run: true
-        files: ".*"  # Run on all file types

@@ -3,3 +3,4 @@ cohere==5.13.11
 openai==1.61.0
 python-dotenv==1.0.1
 pre-commit==4.1.0
+click==8.2.1
